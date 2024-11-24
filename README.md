@@ -84,7 +84,9 @@ Cuenta con una arquitectura modular que facilita su mantenimiento, escalabilidad
 2. **El servidor estará disponible en:**
    Verificar cobertura de pruebas: Verificar cobertura de pruebas: Asegúrate de que todas las rutas y funciones sean probadas correctamente.
 
-## **Estructura del Proyecto**
+## Estructura del Proyecto
+
+```plaintext
 payments-service/
 ├── src/
 │   ├── controllers/          # Controladores de las rutas.
