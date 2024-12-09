@@ -20,6 +20,9 @@ const Payment = sequelize.define("Payment", {
   status: {
     type: DataTypes.STRING,
     defaultValue: "pending",
+    validate: {
+      isIn: [["pending", "completed", "refunded"]],
+    },
   },
   payment_method: {
     type: DataTypes.STRING,
@@ -33,6 +36,18 @@ const Payment = sequelize.define("Payment", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  timestamps: true,
+  indexes: [
+    { fields: ["customer_id"] },
+    { fields: ["order_id"] },
+  ],
+});
+
+Payment.beforeUpdate((payment) => {
+  if (payment.status === "refunded" && payment.previous("status") !== "completed") {
+    throw new Error("Only completed payments can be refunded.");
+  }
 });
 
 module.exports = { sequelize, Payment };
